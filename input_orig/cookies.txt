@@ -1,0 +1,30 @@
+# Cookies for domains related to kaggle.com.
+# This content may be pasted into a cookies.txt file and used by wget
+# Example:  wget -x --load-cookies cookies.txt https://www.kaggle.com/c/bosch-production-line-performance/data
+#
+.kaggle.com	TRUE	/	FALSE	1777650556	optimizelyEndUserId	oeu1462290556851r0.5595398666452305
+.kaggle.com	TRUE	/	FALSE	1530185333	_ym_uid	1467977334902717991
+.kaggle.com	TRUE	/	FALSE	1502123171.440824	__insp_ref	d
+.kaggle.com	TRUE	/	FALSE	1505004598.71087	__insp_wid	22567980
+.kaggle.com	TRUE	/	FALSE	1505004598.710948	__insp_slim	1473468598709
+.kaggle.com	TRUE	/	FALSE	1505004598.711586	__insp_nv	true
+.kaggle.com	TRUE	/	FALSE	1505004598.712367	__insp_targlpu	https%3A%2F%2Fwww.kaggle.com%2F
+.kaggle.com	TRUE	/	FALSE	1505004598.712466	__insp_targlpt	Kaggle%3A%20Your%20Home%20for%20Data%20Science
+.kaggle.com	TRUE	/	FALSE	1505004601.171128	__insp_norec_sess	true
+.kaggle.com	TRUE	/	TRUE	1536803117.694276	.ASPXAUTH	2B8C7F9AB7C656603007CE28BFF964199E18EE9168D3B273EB995AB299EFCEAFAA426D168AF32F21653D6FEE930E153B59EA43960653865F2C1BE743B6B2AFC783BF2CE88B12E97428DCC7AF1671643338FE8AAA
+www.kaggle.com	FALSE	/	FALSE	0	__RequestVerificationToken	yo_9jNXeiANobmNNsb3TrZP9Yzhr8MFMkqEwgT6Nw6IDDIV4KI8xkTFOeGDlFpFZNtZnOx2DP23-u5a5sEBZaRGeiCg1
+.inclass.kaggle.com	TRUE	/	FALSE	1537092651	__utma	100197190.355160177.1474020643.1474020643.1474020643.1
+.inclass.kaggle.com	TRUE	/	FALSE	0	__utmc	100197190
+.inclass.kaggle.com	TRUE	/	FALSE	1489788651	__utmz	100197190.1474020643.1.1.utmcsr=kaggle.com|utmccn=(referral)|utmcmd=referral|utmcct=/competitions
+.kaggle.com	TRUE	/	FALSE	0	ARRAffinity	a1f2e0851ff7e4cea3fc44de7296743a24a31e636c51d9d4876a2a31fd3e731c
+.blog.kaggle.com	TRUE	/	FALSE	1538107548	__utma	176227318.1189170303.1462538784.1474042388.1475035548.25
+.blog.kaggle.com	TRUE	/	FALSE	0	__utmc	176227318
+.blog.kaggle.com	TRUE	/	FALSE	1490803548	__utmz	176227318.1474042388.24.17.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)
+.kaggle.com	TRUE	/	FALSE	1790434481	optimizelySegments	%7B%225684981785%22%3A%22false%22%2C%225646609362%22%3A%22referral%22%2C%225668443100%22%3A%22gc%22%7D
+.kaggle.com	TRUE	/	FALSE	1790434481	optimizelyBuckets	%7B%225909990047%22%3A%225907850123%22%2C%226323581014%22%3A%226321821099%22%2C%226786340963%22%3A%226803321038%22%7D
+.kaggle.com	TRUE	/	FALSE	1475153668	__utmt	1
+.kaggle.com	TRUE	/	FALSE	1538225298	__utma	158690720.1295681187.1462290561.1475145581.1475153069.449
+.kaggle.com	TRUE	/	FALSE	1475155098	__utmb	158690720.4.10.1475153069
+.kaggle.com	TRUE	/	FALSE	0	__utmc	158690720
+.kaggle.com	TRUE	/	FALSE	1490921298	__utmz	158690720.1474708502.439.69.utmcsr=t.co|utmccn=(referral)|utmcmd=referral|utmcct=/bqirRd5hTd
+.www.kaggle.com	TRUE	/	FALSE	0	ARRAffinity	505b81a023b791c49f0354383296a21a44ad570657ab91f18066927bc49eba95

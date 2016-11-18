@@ -1,0 +1,92 @@
+## thoughts on bosch
+
+1.which stations the sample passes through (column per station))(numeric/categorical/date)('_pass_num')(136)
+2.which line sample passes through (column per line)(numeric/date)('_pass_num')(8)
+3.the number of stations sample passes through (number)(numeric/categorical/date)('nsp_num')(3)
+4.Number of Non-NAN entries in each Id (numeric/categorical/date)('nonNaN_full_num')(3)
+5.sum of features in full (numeric/date)('sum_full_num')(2)
+6.Number of Non-NAN entries per stationwise & linewise (numeric/categorical/date)('nonNaN_num','nonNaN_line_num')(148)
+7.Sum of features per stationwise & linewise for each Id (numeric/date)('sum_num')('sum_num')(110)
+8.min/max stationwise & linewise (numeric/date)('_min_num')('_max_num')(220)
+9.duration stayed in whole assembly line(date)('date_min_full')('date_max_full')('date_diff_full')(3)
+10.duration stayed per station/line for each sample (NaN for all Nan,0 for all same, diff of max minus min for multiple measurements in date)(_diff_date)(56)
+-no. of different time measurements sample has for each station/line ('count_unique_date')
+12.time diff sample takes to move from one station/line to other ('ddS51-S50')(jeffH visualize part history)(min of next station minus max of this station)(1173)
+13.which features/stations sample passes through..group through same NaNs (column per feature) (recorded a timestamp)(pd.factorize hash)(5)
+-distance from 800 for those features (jeffH analysis)
+-faron id features for each sample based on sort of each station time and diff of id of those (maybe for some stations which have less null/NaNs)
+-multiplication of all station numbers sample passes through/ of all error rates of those stations (What's wrong with station 32)
+
+
+#groupwise
+-one group categorical feature for all same features in numeric+cat. one for only numeric and one for categorical
+-if some samples passes through same stations then they are in same group (assign alphabets to each group in one column, a categorical column
+
+#featurewise
+-if some samples passes through same features then they are in same group (assign alphabets to each group in one column, a categorical column
+=========================================================================
+#Gilberto
+Using only individual row information is hard to beat 0.31MCC and 0.78AUC and that model have a big value to Bosch. Using any kind of "data property feature" (there are many ways to explore it not using ID) it is possible to beat 0.5x, 0.93AUC. My current solution don't use IDs.
+
+#Vicens 
+Using time correlations ( but no row order correlations or ID's) and some model based feature engineering is possible to push the performance to 0.0281 logLoss / 0.807 AUC/ 0.317 MCC (0.3166 LB)
+Anyway, some "real" phenomena can cause row duplicates in the data: after a comunication crash, SCADA ( the subsystem responsible for reading and storing the measurements) usually repeat the last seen value, so the measurements associated to a given sequence of part numbers corresponds to the last correctly received, until the comunications is recovered.
+Supose the comunication failure is produced by a power glitch ( or blackout) and this glitch also affect the parts quality currently manufactured. Then the first part number in a sequence of duplications will fail the quality check.
+Doesn't sounds familiar to you? ;)
+Just writing some science-fiction about "magic data properties"
+"Any sufficiently advanced technology is indistinguishable from magic"
+Clarke's 3'rd law
+
+@Vicens
+    Using time correlations ( but no row order correlations or ID's)
+By this you mean when duplicates ocurr there is greater probability of some product to fail ?
+
+@Salka
+yes, specially those with consecutive Id's. And you can bet for the first in the row ;)
+
+@Vicens
+Yes, there is higher probability but, clearly for now i don't see pattern for predicting the first, but there are patterns for second, third duplicates in a row. I am clearly missing something :) 
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+#abhilash awasthi features
+The features that I tried are -
+
+--Numeric File--
+1. Number of Non-NAN entries in each Id.
+2. Number of Non-NAN entries in each Id per stationwise & linewise.
+3. Sum of Numeric features stationwise & linewise for each Id.
+
+--Date File--
+
+As was shown by beluga in his "Date Exploration" Kernel that 0.01 = 6 min. I ordered the date file in ascending order as per station S3 since it has least NaNs (This I did so that my data would be arranged in ascending time order. So that I can find any pattern, if there is any between Time & Ids. I am assuming that Bosch has anonymized the earliest date in the data as 0). Then I calculated -
+1. Min_Time & Max_Time for each Id.
+2. Time_Difference (Max_Time - Min_Time) for each Id.
+3. Since 0.01= 6 min. This gives 1 hr = 0.1, 1 day = 2.39, 1 week = 16.75, 1 month = 71.7, 1 year = 872.35.
+From this I created year feature, week feature, day of week feature, hour feature. Day of week & hour feature were furthur divided into Start_Day, End_Day & Start_Hour, End_Hour respectively.
+
+Apart from above features, I am also thinking of creating some more features mentioned below -
+
+    If product passes through S32 then 1 else 0. Similarly if it passes through S32 but not S34 then 1 else 0, and S32 but not S33 then 1 else 0.
+    Grouping Ids on the basis of time. Since train & test set both shares same time period. So if there is a faulty product made at a particular time, then there is a fair chance that the products manufactured near the same timeline will be faulty.
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+#to think about
+-edge features
+-missing value structure
+
+-I might be wrong but sniffing around the data, I found that there are over 1500+ records in the training data with label (1) that have identical values in the test data for all numeric and categorical variables....I repeat "IDENTICAL" values for every single numeric and categorical variable. I engineered some features based on this info and got 0.62+ MCC local cv!!! I was ecstatic "eat my dust", upon submission only ~0.40 on LB. What happened? I think there will be huge shake up in this competition. I see many Grand-masters at the top and they have a knack for hanging on....but I think there will be huge shake up "Santander style!"
+DavidGbodiOdaibo
+
+-It has been discussed again in the forum: the general strategy would be to find as many cases as possible for which you are quite certain they are positive. Most probably their number will be substantially lower than 0.5% of the test set.
+
+-same product families must go to same path..different product families have different path..grouping for those families..and predicting based on them
+-difference between paths..some product can go to extra station for more quality check (JohnM prduction map)
+
+-What would you say that these features represent in the real world? The first 2 features are telling us the difference in unit Id's the way the data was presented to us, the 2nd 2 features are telling us the difference between the unit Id's when they're sorted by time. Are larger/smaller differences supposed to be suggesting gaps in manufacturing, perhaps where other bad parts that didn't make the data set might have been? What are your thoughts? (Faron)
+
+-Awesome deduction work. I am curious if there is an influence of the time of day on the fails. (Beluga)
+Hi, The timestamps were anonymized in this competition. My motivation was to understand how long is the test/ train period. This would allow to use some intuition for feature engineering. My main question was: what does 0.01 time difference mean? Is it ms, s, m, hour, day? To answer that I tried to find periodic patterns using auto correlation.
+
+-how do we explain that some parts has stayed very long time in the assembly line? (Beluga)
+
+-The analysis in this notebook reveals that the positive and negative samples differ significantly both in their missing-value counts as well as in their missing-value correlation structure. On the other hand, the behavior on non-missing samples is surprisingly similar for positive and negative samples. (Christian Hirsch)
